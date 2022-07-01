@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  exporter:
+    container_name: coinmarketcap_exporter
+    build: ./
+    networks:
+      - prom
+  prometheus:
+    container_name: prom
+    image: prom/prometheus
+    ports: 
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - prometheus_data:/prometheus
+    networks:
+      - prom
+
+volumes:
+  prometheus_data:
+
+networks:
+  prom:
