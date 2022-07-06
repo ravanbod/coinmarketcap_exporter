@@ -4,11 +4,13 @@ services:
   exporter:
     container_name: coinmarketcap_exporter
     build: ./
+    restart: unless-stopped
     networks:
       - prom
   prometheus:
     container_name: prom
     image: prom/prometheus
+    restart: unless-stopped
     ports: 
       - 9090:9090
     volumes:
